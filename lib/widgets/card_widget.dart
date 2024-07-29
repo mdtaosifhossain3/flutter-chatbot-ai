@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chatgpt_clone/constants/constants.dart';
 import 'package:chatgpt_clone/services/assets_manager.dart';
 import 'package:chatgpt_clone/widgets/box_widget.dart';
@@ -43,12 +42,11 @@ class CardWidget extends StatelessWidget {
                             margin: const EdgeInsets.only(right: 50),
                             bgColor: cardColor,
                             topRight: const Radius.circular(15),
-                            child: AnimatedTextKit(
-                                isRepeatingAnimation: false,
-                                repeatForever: false,
-                                displayFullTextOnTap: true,
-                                totalRepeatCount: 1,
-                                animatedTexts: [TyperAnimatedText(msg.trim())]),
+                            child: TextWidget(
+                              label: msg,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           )
                         ],
                       ),
