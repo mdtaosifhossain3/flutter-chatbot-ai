@@ -61,7 +61,7 @@ class PromptProvider with ChangeNotifier {
           ),
           headers: {
             "Content-Type": "application/json",
-            "x-goog-api-key": "AIzaSyC55kCym5snLEwChONsQCu6U_n1acI49Xo"
+            "x-goog-api-key": "${dotenv.env["API_KEY"]}"
           },
           body: jsonEncode({
             "contents": [
