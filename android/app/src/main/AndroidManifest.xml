@@ -3,7 +3,7 @@
 
 
     <application
-        android:label="chatgpt_clone"
+        android:label="ChatBot Ai"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
