@@ -22,14 +22,16 @@ class InputBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Consumer<PromptProvider>(
-              builder: (context, value, child) {
+            child: Selector<PromptProvider, TextEditingController>(
+              selector: (_, provider) => provider.controller,
+              builder: (context, controller, child) {
                 return TextFieldWidget(
                   focusNode: focusNodeController,
                   style: const TextStyle(color: Colors.black),
-                  controller: value.controller,
+                  controller: controller,
                   onChanged: (val) {
-                    value.onSubmit(val);
+                    // Handle changes without causing a full rebuild
+                    promptProvider.onSubmit(val);
                   },
                   isCollapsed: true,
                   hintText: "Enter a prompt here",

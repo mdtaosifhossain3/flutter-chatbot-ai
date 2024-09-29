@@ -27,7 +27,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       focusNode: focusNode,
-      onChanged: onChanged,
+      onSubmitted: onChanged,
       controller: controller,
       obscureText: isObScureText != null ? true : false,
       style: style,
