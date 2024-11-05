@@ -10,3 +10,4 @@ Color fillColor = const Color(0xffF7F8F9);
 Color borderColor = const Color(0xffE8ECF4);
 Color hintTextColor = const Color(0xff8391A1);
 Color buttonColor = const Color(0xff1E232C);
+Color redColor = Colors.red;

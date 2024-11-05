@@ -1,7 +1,10 @@
+import 'package:chatgpt_clone/constants/constants.dart';
 import 'package:chatgpt_clone/providers/theme_provider.dart';
 import 'package:chatgpt_clone/screens/welcomeScreen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../services/delete_service.dart';
 
 class PopoverOptions extends StatefulWidget {
   final ThemeProvider? themeProvider;
@@ -42,6 +45,25 @@ class _PopoverOptionsState extends State<PopoverOptions> {
                   width: 8,
                 ),
                 Text("Ligth mode")
+              ],
+            )),
+        TextButton(
+            onPressed: () async {
+              await deleteSubcollection(context);
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.delete,
+                  color: redColor,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  "Delete",
+                  style: TextStyle(color: redColor),
+                )
               ],
             )),
         TextButton(
