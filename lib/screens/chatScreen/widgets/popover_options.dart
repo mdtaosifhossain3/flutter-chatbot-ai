@@ -4,7 +4,7 @@ import 'package:chatgpt_clone/screens/welcomeScreen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/delete_service.dart';
+import '../../../services/delete_service.dart';
 
 class PopoverOptions extends StatefulWidget {
   final ThemeProvider? themeProvider;

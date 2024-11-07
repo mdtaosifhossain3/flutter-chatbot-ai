@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:chatgpt_clone/screens/chatScreen/chat_screen.dart';
 import 'package:chatgpt_clone/screens/welcomeScreen/welcome_screen.dart';
 import 'package:chatgpt_clone/services/assets_manager.dart';
@@ -37,13 +38,15 @@ class _SplashScreenState extends State<SplashScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(AssetsManager.splashScreenUrl),
+        FadedScaleAnimation(child: Image.asset(AssetsManager.splashScreenUrl)),
         const SizedBox(
           height: 10,
         ),
-        const TextWidget(
-          label: "Hello!",
-          fontSize: 24,
+        FadedScaleAnimation(
+          child: const TextWidget(
+            label: "Hello!",
+            fontSize: 24,
+          ),
         )
       ],
     )));

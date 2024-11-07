@@ -42,10 +42,10 @@ class CardWidget extends StatelessWidget {
                             margin: const EdgeInsets.only(right: 50),
                             bgColor: cardColor,
                             topRight: const Radius.circular(15),
-                            child: TextWidget(
-                              label: msg,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                            child: SelectableText(
+                              msg,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
                             ),
                           )
                         ],

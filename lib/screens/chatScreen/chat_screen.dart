@@ -1,7 +1,7 @@
 import 'package:chatgpt_clone/providers/theme_provider.dart';
-import 'package:chatgpt_clone/screens/chatScreen/input_bar.dart';
-import 'package:chatgpt_clone/screens/chatScreen/popover_options.dart';
-import 'package:chatgpt_clone/screens/chatScreen/spinner.dart';
+import 'package:chatgpt_clone/screens/chatScreen/widgets/input_bar.dart';
+import 'package:chatgpt_clone/screens/chatScreen/widgets/popover_options.dart';
+import 'package:chatgpt_clone/screens/chatScreen/widgets/spinner.dart';
 import 'package:chatgpt_clone/services/assets_manager.dart';
 import 'package:chatgpt_clone/widgets/card_widget.dart';
 import 'package:chatgpt_clone/widgets/text_widget.dart';
