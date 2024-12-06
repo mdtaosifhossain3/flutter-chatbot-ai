@@ -44,8 +44,10 @@ class CardWidget extends StatelessWidget {
                             topRight: const Radius.circular(15),
                             child: SelectableText(
                               msg,
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: buttonColor),
                             ),
                           )
                         ],

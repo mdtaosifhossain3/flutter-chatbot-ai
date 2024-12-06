@@ -1,29 +1,27 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:chatgpt_clone/screens/chatScreen/chat_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterService {
-  createAccount({context, email, password, name}) async {
+  createAccount({context, email, password, name, mobile}) async {
     //Loading Effect
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Dialog(
-            backgroundColor: Colors.transparent,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SpinKitThreeInOut(
-                    color: Colors.black,
-                  ),
-                ]),
-          );
-        });
+    // showDialog(
+    //     context: context,
+    //     barrierDismissible: false,
+    //     builder: (BuildContext context) {
+    //       return const Dialog(
+    //         backgroundColor: Colors.transparent,
+    //         child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //             children: [
+    //               SpinKitThreeInOut(
+    //                 color: Colors.black,
+    //               ),
+    //             ]),
+    //       );
+    //     });
     try {
       final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -46,9 +44,9 @@ class RegisterService {
             .set({"name": name, "email": email});
 
         //Navigate to ChatScreen
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          return const ChatScreen();
-        }));
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        //   return const ChatScreen();
+        // }));
 
         return "Success";
       }

@@ -16,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final _user = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {

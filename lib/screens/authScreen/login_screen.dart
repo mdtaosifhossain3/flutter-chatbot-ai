@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
+  TextEditingController number = TextEditingController();
   //Login Service
   final loginService = LoginService();
 
@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     email.dispose();
     password.dispose();
+    number.dispose();
     super.dispose();
   }
 
@@ -42,7 +43,10 @@ class _LoginScreenState extends State<LoginScreen> {
               return const WelcomePage();
             }));
           },
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: buttonColor,
+          ),
         ),
       ),
       resizeToAvoidBottomInset: false,
@@ -66,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFieldWidget(
                       hintText: 'Enter your email',
                       controller: email,
+                      style: TextStyle(color: buttonColor),
                     ),
                     const SizedBox(
                       height: 15,
@@ -74,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: 'Enter your password',
                       isObScureText: true,
                       controller: password,
+                      style: TextStyle(color: buttonColor),
                     ),
                     const SizedBox(
                       height: 52,
@@ -88,7 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           loginService.login(
                               context: context,
                               email: email.text,
-                              password: password.text);
+                              password: password.text,
+                              mobileNumber: number.text);
                         }
                       },
                       child: const ButtonWidget(
