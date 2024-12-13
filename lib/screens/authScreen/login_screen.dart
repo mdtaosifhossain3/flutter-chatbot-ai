@@ -76,6 +76,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 15,
                     ),
                     TextFieldWidget(
+                      hintText: 'Enter your Robi/Airtel Number',
+
+                      controller: number,
+                      style: TextStyle(color: buttonColor),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFieldWidget(
                       hintText: 'Enter your password',
                       isObScureText: true,
                       controller: password,
@@ -86,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        if (email.text == '' || password.text == "") {
+                        if (email.text == '' || password.text == "" || number.text == "") {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text("Fields Cant be Empty")));

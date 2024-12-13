@@ -1,6 +1,7 @@
 import 'package:chatgpt_clone/constants/constants.dart';
 import 'package:chatgpt_clone/providers/prompt_provider.dart';
 import 'package:chatgpt_clone/providers/theme_provider.dart';
+import 'package:chatgpt_clone/screens/authScreen/register_screen.dart';
 import 'package:chatgpt_clone/screens/splashScreen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

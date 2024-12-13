@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../screens/chatScreen/chat_screen.dart';
+
 class RegisterService {
   createAccount({context, email, password, name, mobile}) async {
     //Loading Effect
@@ -44,24 +46,26 @@ class RegisterService {
             .set({"name": name, "email": email});
 
         //Navigate to ChatScreen
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        //   return const ChatScreen();
-        // }));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+          return const ChatScreen();
+        }));
 
         return "Success";
       }
 
       return;
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+
 
       if (e.code == 'weak-password') {
+        Navigator.pop(context);
         showAlert(
             title: 'Error',
             text: "The password provided is too weak.",
             context: context);
         return;
       } else if (e.code == 'email-already-in-use') {
+        Navigator.pop(context);
         showAlert(
             title: 'Error',
             text: "The account already exists for that email.",
@@ -69,6 +73,7 @@ class RegisterService {
 
         return;
       } else {
+        Navigator.pop(context);
         showAlert(
             title: 'Error', text: "Account Creation Failed", context: context);
         // ignore: avoid_print
@@ -77,7 +82,7 @@ class RegisterService {
     } on SocketException catch (e) {
       Navigator.pop(context);
       showAlert(
-          title: 'Time Out', text: e.message.toString(), context: context);
+          title: 'Time Out',text:  "Network issue", context: context);
     } catch (e) {
       Navigator.pop(context);
       showAlert(

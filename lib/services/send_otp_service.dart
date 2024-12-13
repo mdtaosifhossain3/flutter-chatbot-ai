@@ -40,23 +40,23 @@ class SendOTPService {
     name,
   }) async {
     String mobile = mobileNumber.trim();
-    // if (mobile.isEmpty) {
-    //   // Show a message if the mobile number is empty
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Please enter a mobile number')),
-    //   );
-    //   return;
-    // }
+    if (mobile.isEmpty) {
+      // Show a message if the mobile number is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a mobile number')),
+      );
+      return;
+    }
 
-    // if (!_isValidMobile(mobile)) {
-    //   // Show error message if the mobile number is invalid
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //         content:
-    //             Text('Invalid mobile number. Please enter a valid number')),
-    //   );
-    //   return;
-    // }
+    if (!_isValidMobile(mobile)) {
+      // Show error message if the mobile number is invalid
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Invalid mobile number. Please enter a valid number')),
+      );
+      return;
+    }
     // Prepare the request data
     Map<String, String> data = {
       'user_mobile': mobile,
@@ -79,31 +79,31 @@ class SendOTPService {
         });
     // Send HTTP POST request to the API
     try {
-      // final response = await http.post(
-      //   Uri.parse('${dotenv.env["API_LINK"]}/OTP_request.php'),
-      //   body: data,
-      // );
-      //
-      // var body = response.body;
-      // final statusCode = _extractValue(body, 'Status code').trim();
-      // final result = statusCode.replaceAll(":", "").trim();
-      //
-      // if (result == "E1351") {
-      //   Navigator.pop(context);
-      //
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(content: Text('The Number already Exsist!')),
-      //   );
-      //   return;
-      // } else if (result != "S1000") {
-      //   Navigator.pop(context);
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(
-      //         content: Text('Please Enter a valid Robi/Airtel Number')),
-      //   );
-      //   return;
-      // }
-      //
+      final response = await http.post(
+        Uri.parse('${dotenv.env["API_LINK"]}/request_otp_chtai.php'),
+        body: data,
+      );
+
+      var body = response.body;
+      final statusCode = _extractValue(body, 'Status code').trim();
+      final result = statusCode.replaceAll(":", "").trim();
+
+      if (result == "E1351") {
+        Navigator.pop(context);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('The Number already Exsist!')),
+        );
+        return;
+      } else if (result != "S1000") {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Please Enter a valid Robi/Airtel Number')),
+        );
+        return;
+      }
+
 
       final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -125,28 +125,21 @@ class SendOTPService {
             .set({"name": name, "email": email});
         // sharedPreferences.setString("NUM", result);
 
-        // if (result == "S1000") {
-        //   final ref = _extractValue(body, 'Reference number');
-        //   final refResult = ref.replaceAll(":", "").trim();
-        //   sharedPreferences.setString("REFERENCE_NUMBER", refResult);
-        //   sharedPreferences.setString("NUM", result);
-        //   //OTP Verification Page
-        //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-        //     return OtpVerificationView();
-        //   }));
-        //
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(content: Text('OTP sent successfully')),
-        //   );
-        //   return;
-        // }
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return ChatScreen();
-        }));
+        if (result == "S1000") {
+          final ref = _extractValue(body, 'Reference number');
+          final refResult = ref.replaceAll(":", "").trim();
+          sharedPreferences.setString("REFERENCE_NUMBER", refResult);
+          sharedPreferences.setString("NUM", result);
+          //OTP Verification Page
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return OtpVerificationView();
+          }));
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Welcome to Chatbot Ai')),
-        );
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('OTP sent successfully')),
+          );
+          return;
+        }
 
         return;
       }
@@ -178,13 +171,13 @@ class SendOTPService {
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Network Issue ${e.toString()}')),
+        SnackBar(content: Text('Network Issue')),
       );
     } catch (e) {
       Navigator.pop(context);
       // Handle error in case of network issues
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(content: Text('Something went wrong')),
       );
     }
   }

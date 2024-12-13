@@ -33,23 +33,23 @@ class LoginService {
 
   login({context, email, password, mobileNumber}) async {
     String mobile = mobileNumber.trim();
-    // if (mobile.isEmpty) {
-    //   // Show a message if the mobile number is empty
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Please enter a mobile number')),
-    //   );
-    //   return;
-    // }
-    //
-    // if (!_isValidMobile(mobile)) {
-    //   // Show error message if the mobile number is invalid
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //         content:
-    //             Text('Invalid mobile number. Please enter a valid number')),
-    //   );
-    //   return;
-    // }
+    if (mobile.isEmpty) {
+      // Show a message if the mobile number is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a mobile number')),
+      );
+      return;
+    }
+
+    if (!_isValidMobile(mobile)) {
+      // Show error message if the mobile number is invalid
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Invalid mobile number. Please enter a valid number')),
+      );
+      return;
+    }
     // Prepare the request data
     Map<String, String> data = {
       'user_mobile': mobile,
@@ -71,74 +71,78 @@ class LoginService {
           );
         });
     try {
-      // final response = await http.post(
-      //   Uri.parse('${dotenv.env["API_LINK"]}/OTP_request.php'),
-      //   body: data,
-      // );
-      //
-      // var body = response.body;
-      // final statusCode = _extractValue(body, 'Status code').trim();
-      // final result = statusCode.replaceAll(":", "").trim();
+      final response = await http.post(
+        Uri.parse('${dotenv.env["API_LINK"]}/request_otp_chtai.php'),
+        body: data,
+      );
+
+      var body = response.body;
+      final statusCode = _extractValue(body, 'Status code').trim();
+      final result = statusCode.replaceAll(":", "").trim();
 
       final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Navigator.pop(context);
+
       if (cred.user != null) {
         //Store the uid
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         await sharedPreferences.setString("id", cred.user!.uid);
-        // Navigator.pop(context);
-        // if (result == "S1000") {
-        //   final ref = _extractValue(body, 'Reference number');
-        //   final refResult = ref.replaceAll(":", "").trim();
-        //   sharedPreferences.setString("REFERENCE_NUMBER", refResult);
-        //
-        //   //OTP Verification Page
-        //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-        //     return OtpVerificationView();
-        //   }));
-        //
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(content: Text('OTP sent successfully')),
-        //   );
-        //   return;
-        // } else if (result == "E1351") {
-        //   Navigator.pop(context);
+
+        if (result == "S1000") {
+          final ref = _extractValue(body, 'Reference number');
+          final refResult = ref.replaceAll(":", "").trim();
+          sharedPreferences.setString("REFERENCE_NUMBER", refResult);
+
+          //OTP Verification Page
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return OtpVerificationView();
+          }));
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('OTP sent successfully')),
+          );
+          return;
+        } else if (result == "E1351") {
         //   //OTP Verification Page
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return const ChatScreen();
         }));
-        //
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(content: Text('Welcome Back!')),
-        //   );
-        //   return;
-        // }
-        //  print(response.body); // Error occurred
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Welcome Back!')),
+          );
+          return;
+        }else if (result == "E1600") {
+          Navigator.pop(context);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(' Sorry, the CHTAI application is temporarily  unavailable. Please try again later')),
+          );
+          return;
+        }
+        Navigator.pop(context);
+
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Welcome Back!')),
+          const SnackBar(content: Text('Something went wrong')),
         );
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   const SnackBar(
-        //       content: Text('Please Enter a valid Robi/Airtel Number')),
-        // );
         return;
       }
-
+      Navigator.pop(context);
       return;
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+
 
       if (e.code == 'user-not-found') {
+        Navigator.pop(context);
         showAlert(
             title: 'Error',
             text: "No user found for that email.",
             context: context);
         return;
       } else if (e.code == 'wrong-password') {
+        Navigator.pop(context);
         showAlert(
             title: 'Error',
             text: "Wrong password provided for that user.",
@@ -146,6 +150,7 @@ class LoginService {
 
         return;
       } else {
+        Navigator.pop(context);
         showAlert(title: 'Error', text: "Login Failed", context: context);
         // ignore: avoid_print
         return print(e.message);
@@ -153,7 +158,7 @@ class LoginService {
     } on SocketException catch (e) {
       Navigator.pop(context);
       showAlert(
-          title: 'Time Out', text: e.message.toString(), context: context);
+          title: 'Time Out', text: "Network issue", context: context);
     } catch (e) {
       Navigator.pop(context);
       showAlert(

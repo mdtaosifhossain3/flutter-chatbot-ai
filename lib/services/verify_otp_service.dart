@@ -71,14 +71,14 @@ class VerifyOTPService {
     // Send HTTP POST request to the API
     try {
       final response = await http.post(
-        Uri.parse('${dotenv.env["API_LINK"]}/OTP_verify.php'),
+        Uri.parse('${dotenv.env["API_LINK"]}/verify_otp_chtai.php'),
         body: data,
       );
 
       var body = response.body;
       final statusCode = extractValue(body, 'Status code').trim();
       final result = statusCode.replaceAll(":", "").trim();
-
+      Navigator.pop(context);
       if (result == "S1000") {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return const ChatScreen();
@@ -96,12 +96,12 @@ class VerifyOTPService {
     } on SocketException {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Time Out')),
+        const SnackBar(content: Text('Network issue')),
       );
     } catch (e) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(content: Text('Something went wrong')),
       );
     }
   }

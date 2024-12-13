@@ -78,7 +78,7 @@ class _ChatScreensState extends State<ChatScreen> {
                                   themeProvider: themeProvider,
                                 ),
                             width: 200,
-                            height: 195,
+                            height:240,
                             backgroundColor:
                                 themeProvider.themeMode == ThemeMode.light
                                     ? Colors.white

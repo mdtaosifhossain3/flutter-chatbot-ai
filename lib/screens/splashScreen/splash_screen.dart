@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
               builder: (_) =>
-                  _user != null ? const ChatScreen() : const WelcomePage()),
+                   const WelcomePage()),
           (route) => false);
     });
 

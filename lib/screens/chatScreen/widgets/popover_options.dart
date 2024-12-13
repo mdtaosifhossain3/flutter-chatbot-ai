@@ -88,29 +88,29 @@ class _PopoverOptionsState extends State<PopoverOptions> {
                 )
               ],
             )),
-        // TextButton(
-        //     onPressed: () async {
-        //       await sendStopMessage();
-        //       await Future.delayed(const Duration(seconds: 6));
-        //       Navigator.push(context, MaterialPageRoute(builder: (_) {
-        //         return const WelcomePage();
-        //       }));
-        //     },
-        //     child: Row(
-        //       children: [
-        //         Icon(
-        //           Icons.delete,
-        //           color: redColor,
-        //         ),
-        //         const SizedBox(
-        //           width: 8,
-        //         ),
-        //         const Text(
-        //           "Unsubscribed",
-        //           style: TextStyle(color: Colors.red),
-        //         ),
-        //       ],
-        //     )),
+        TextButton(
+            onPressed: () async {
+              await sendStopMessage();
+              await Future.delayed(const Duration(seconds: 6));
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return const WelcomePage();
+              }));
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.delete,
+                  color: redColor,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  "Unsubscribe",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ],
+            )),
         TextButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();

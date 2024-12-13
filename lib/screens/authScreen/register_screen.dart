@@ -89,6 +89,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(
                         height: 15,
                       ),
+                      TextFieldWidget(
+                        hintText: 'Enter your Robi/Airtel Number',
+                        controller: mobile,
+                        style: TextStyle(color: buttonColor),
+                      ),
                       const SizedBox(
                         height: 15,
                       ),
@@ -105,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () async {
                           if (email.text == '' ||
                               password.text == "" ||
-                              name.text == '') {
+                              name.text == '' || mobile.text == "" ) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text("Fields Cant be Empty")));
